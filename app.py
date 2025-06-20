@@ -6,4 +6,9 @@ car_data = pd.read_csv('vehicles_us.csv')  # leer los datos
 st.header("Venta de vehiculos")
 
 car_data['date_posted'] = pd.to_datetime(
-    car_data['date_posted'], format='%Y-%m-%d')
+    car_data['date_posted'], format='%Y-%m-%d').dt.date
+
+st.subheader("Vehiculos recien agregados")
+
+st.write(car_data.sort_values(by='date_posted',
+         ascending=False).reset_index(drop=True).head(20))
