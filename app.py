@@ -44,10 +44,10 @@ if bar_checkbox:
     fig = px.bar(car_data, x='type', color='brand')
     st.plotly_chart(fig, use_container_width=True)
 
-# Boton, muestra histograma de days_listed, coloreado por condition
-days_listed_button = st.button("Precio vs Dias publicado")
+# Checkbox, muestra histograma de days_listed, coloreado por condition
+days_listed_checkbox = st.checkbox("Condicion vs Dias publicado")
 
-if days_listed_button:
+if days_listed_checkbox:
     st.write("Grafico de linea")
     fig = px.histogram(car_data, x='days_listed', color='condition')
     st.plotly_chart(fig, use_container_width=True)
