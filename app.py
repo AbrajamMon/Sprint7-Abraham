@@ -15,8 +15,20 @@ car_data['date_posted'] = pd.to_datetime(
 # Agregar la columna 'brand' extrayendo al primer palabra de 'model'
 car_data['brand'] = car_data['model'].str.split().str[0]
 
-# Mostrar el Dataframe
-st.dataframe(car_data, hide_index=True, column_config={
+# Multiselect, filtro para el dataframe por marca
+marcas = st.multiselect("Filtrar por marca", car_data['brand'].unique(),
+                        default=car_data['brand'].unique())
+
+# Multiselect, filtra el dataframe por type
+tipo = st.multiselect("Filtrar por tipo", car_data['type'].unique(),
+                      default=car_data['type'].unique())
+
+# filtrar el dataframe original
+car_data_filtrado = car_data[car_data['brand'].isin(
+    marcas) & car_data['type'].isin(tipo)]
+
+# Mostrar el Dataframe filtrado
+st.dataframe(car_data_filtrado, hide_index=True, column_config={
              "price": st.column_config.NumberColumn(format="$%d"),
              "odometer": st.column_config.NumberColumn(format="%dkm")})
 
