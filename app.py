@@ -33,15 +33,16 @@ st.dataframe(car_data_filtrado, hide_index=True, column_config={
              "odometer": st.column_config.NumberColumn(format="%dkm")})
 
 # Checkbox, muestra diagrama de dispersion model_year vs price, color por brand
-scatter_checkbox = st.checkbox("Ver diagrama de dispersión")
+scatter_checkbox = st.checkbox(
+    "Ver diagrama de dispersión 'Año del modelo vs precio' ")
 
 if scatter_checkbox:
-    st.write("Diagrama de dispersión")
+    st.write("Año del modelo vs precio:")
     fig = px.scatter(car_data, x='model_year', y='price', color='brand')
     st.plotly_chart(fig, use_container_width=True)
 
 # Checkbox, muestra histograma de precio, color por type
-hist_checkbox = st.checkbox("Ver histograma")
+hist_checkbox = st.checkbox("Ver histograma de precios")
 
 if hist_checkbox:
     st.write("Histograma de precios")
@@ -57,9 +58,10 @@ if bar_checkbox:
     st.plotly_chart(fig, use_container_width=True)
 
 # Checkbox, muestra histograma de days_listed, coloreado por condition
-days_listed_checkbox = st.checkbox("Condicion vs Dias publicado")
+days_listed_checkbox = st.checkbox(
+    "Ver histograma 'Dias publicado y su condicion'")
 
 if days_listed_checkbox:
-    st.write("Grafico de linea")
+    st.write("Numero de dias publicado")
     fig = px.histogram(car_data, x='days_listed', color='condition')
     st.plotly_chart(fig, use_container_width=True)
