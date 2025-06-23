@@ -9,8 +9,8 @@ car_data = pd.read_csv('vehicles_us.csv')
 st.header("Vehiculos en venta")
 
 # Convertir la columa 'date_posted' al formato de fecha
-car_data['date_posted'] = pd.to_datetime(
-    car_data['date_posted'], format='%Y-%m-%d').dt.date
+car_data['date_posted'] = pd.to_datetime(car_data['date_posted'],
+                                         format='%Y-%m-%d').dt.date
 
 # Agregar la columna 'brand' extrayendo al primer palabra de 'model'
 car_data['brand'] = car_data['model'].str.split().str[0]
@@ -23,9 +23,14 @@ marcas = st.multiselect("Filtrar por marca", car_data['brand'].unique(),
 tipo = st.multiselect("Filtrar por tipo", car_data['type'].unique(),
                       default=car_data['type'].unique())
 
+# Slider, filtrar por precio
+precio_min, precio_max = st.slider("Rango de precio", int(car_data['price']. min()),
+                                   int(car_data['price'].max()), (25, 40))
 # filtrar el dataframe original
-car_data_filtrado = car_data[car_data['brand'].isin(
-    marcas) & car_data['type'].isin(tipo)]
+car_data_filtrado = car_data[(car_data['brand'].isin(marcas)) &
+                             (car_data['type'].isin(tipo)) &
+                             (car_data['price'] >= precio_min) &
+                             (car_data['price'] <= precio_max)]
 
 # Mostrar el Dataframe filtrado
 st.dataframe(car_data_filtrado, hide_index=True, column_config={
